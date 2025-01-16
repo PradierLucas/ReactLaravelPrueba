@@ -10,3 +10,10 @@ Route::post('/',[VerdurasController::class, 'guardar'])->name('verdura.guardar')
 Route::get('/verduras/cambiar-estado/{id}', [VerdurasController::class, 'cambiarEstado'])->name('verdura.cambiarEstado');
 Route::get('/editar/{id}',[VerdurasController::class,'editar'])->name('verdura.editar');
 Route::put('/guardaredit/{id}',[VerdurasController::class,'guardaredit'])->name('verdura.guardaredit');
+
+
+
+
+Route::get('/{any}', function () {
+    return view('react'); // Devuelve la vista principal de React
+})->where('any', '.*');
