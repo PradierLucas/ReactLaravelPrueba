@@ -1,58 +1,79 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-
+import React, { useState } from 'react';
 
 
 const Formulario = () => {
-    const [products, setProducts] = useState([]);
+    const [nombre, setNombre] = useState('');
+    const [precioPorKg, setPrecioPorKg] = useState('');
+    const [mensaje, setMensaje] = useState('');
 
-  // Función para obtener los datos de la API
-const fetchProducts = async () => {
-    try {
-        const response = await fetch('/api/products'); // Realiza la solicitud GET
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`); // Maneja errores HTTP
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+
+    // Manejar el envío del formulario
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch('/verduras/crear', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken, 
+                },
+                body: JSON.stringify({
+                    nombre,
+                    precioPorKg,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            setMensaje('Verdura guardada exitosamente');
+            setNombre('');
+            setPrecioPorKg('');
+        } catch (error) {
+            setMensaje('Error al guardar la verdura');
+            console.error('Error al enviar datos:', error);
         }
-        const data = await response.json(); // Convierte la respuesta a JSON
-        setProducts(data); // Actualiza el estado con los datos obtenidos
-    } catch (error) {
-        console.error('Error fetching products:', error); // Maneja errores de red o JSON
-    }
-};
-
-    // Llamar a la API cuando el componente se monta
-    useEffect(() => {
-        fetchProducts();
-    }, []);
+    };
 
     return (
-        <div className='container mt-3'>
-            <h1>Lista de Productos</h1>
-            <table className='table'>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                     
-                        <th>Precio</th>
-                        <th>Stock</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map((product) => (
-                        <tr key={product.id}>
-                            <td>{product.id}</td>
-                            <td>{product.name}</td>
-                            <td>{product.description}</td>
-                            <td>{product.price}</td>
-                            <td>{product.stock}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <div className="container mt-5">
+            <h1>Agregar Verdura</h1>
+            {mensaje && <div className="alert alert-info">{mensaje}</div>}
+            <form onSubmit={handleSubmit}>
+            
+                <div className="mb-3">
+                    <label htmlFor="nombre" className="form-label">Nombre de la Verdura</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="nombre"
+                        value={nombre}
+                        onChange={(e) => setNombre(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="precioPorKg" className="form-label">Precio por Kg</label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        className="form-control"
+                        id="precioPorKg"
+                        value={precioPorKg}
+                        onChange={(e) => setPrecioPorKg(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit" className="btn btn-primary">Guardar</button>
+            </form>
         </div>
     );
 };
 
 export default Formulario;
-

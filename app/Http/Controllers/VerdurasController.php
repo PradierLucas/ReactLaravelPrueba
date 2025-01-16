@@ -17,26 +17,17 @@ class VerdurasController extends Controller
 
     public function guardar(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nombre' => 'required|unique:verduras',
-            'precioPorKg' => 'required|numeric|decimal:0,2',
-            'stock' => 'boolean'
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'precioPorKg' => 'required|numeric|min:0',
         ]);
-        
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
 
-        $verdura = new Verduras;
-        $verdura->nombre = $request->nombre;
-        $verdura->precioPorKg = $request->precioPorKg;
-        $verdura->stock = $request->stock;
-        $verdura->save();
+        $verdura = Verduras::create([
+            'nombre' => $validatedData['nombre'],
+            'precioPorKg' => $validatedData['precioPorKg'],
+        ]);
 
-        return response()->json([
-            'message' => 'Verdura creada correctamente',
-            'verdura' => $verdura
-        ], 201);
+        return response()->json($verdura, 201); // Devuelve la verdura creada
     }
 
     public function show($id)
