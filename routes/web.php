@@ -13,7 +13,9 @@ Route::prefix('verduras')->group(function () {
 });
 
 
-
+Route::get('/login', function () {
+    return view('login'); // Devuelve la vista principal de React
+});
 
 Route::get('/{any}', function () {
     return view('react'); // Devuelve la vista principal de React

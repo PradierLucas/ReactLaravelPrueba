@@ -9,12 +9,14 @@ import Tabla from './tabla';
 
 
 
+
 const App = () => {
     return (
         <Router>
             <Routes>
                 <Route path="/form" element={<Formulario />} />
                 <Route path="/tabla" element={<Tabla />} />
+                
             </Routes>
         </Router>
     );
