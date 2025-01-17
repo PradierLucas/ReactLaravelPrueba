@@ -6,7 +6,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Opcional: Importar funcio
 import Formulario from './form';
 import Tabla from './tabla';
 
-import PrivateRoute from './RutasPrivadas';
 
 
 

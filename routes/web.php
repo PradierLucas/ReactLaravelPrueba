@@ -13,11 +13,8 @@ Route::middleware('auth::sanctum')->group(function(){
         Route::patch('/{id}/estado', [VerdurasController::class, 'cambiarEstado']);
         });
 
-
-Route::get('/login',[AuthController::class,'index'])->name('login');
-Route::post('/loginverif',[VerdurasController::class, 'login']);
-
+Route::post('/loginverif',[AuthController::class],'loginverif');
 
 Route::get('/{any}', function () {
-    return view('react'); 
+    return view('login'); // Devuelve la vista principal de React
 })->where('any', '.*');

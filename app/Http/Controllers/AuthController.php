@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function index(){
-        return view('modules/auth/login');
+        return view('login');
     }
 
     public function login(Request $request)
@@ -25,6 +25,6 @@ class AuthController extends Controller
         $user = Auth::guard()->user();
         $token = $user->createToken('token-name')->plainTextToken;
 
-        return response()->json(['token' => $token, 'redirect'=>'/tabla']);
+        return response()->json(['token' => $token]);
     }
 }

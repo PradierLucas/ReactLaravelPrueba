@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createRoot } from 'react-dom/client';
+
+
 const Login = () => {
-    const [usuario, setusuario] = useState('');
+    const [mail, setmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
@@ -13,13 +15,13 @@ const Login = () => {
         e.preventDefault();
         setError('');
 
-        const response = await fetch('/api/login', {
+        const response = await fetch('/loginverif', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': csrfToken, 
             },
-            body: JSON.stringify({ usuario, password }),
+            body: JSON.stringify({ mail, password }),
         });
 
         const data = await response.json();
@@ -43,12 +45,12 @@ const Login = () => {
                             {error && <div className="alert alert-danger">{error}</div>}
                             <form onSubmit={handleSubmit}>
                                 <div className="form-group">
-                                    <label htmlFor="usuario">Usuario</label>
+                                    <label htmlFor="usuario">Mail</label>
                                     <input
-                                        type="text"
+                                        type="mail"
                                         className="form-control"
-                                        id="usuario"
-                                        value={usuario}
+                                        id="mail"
+                                        value={mail}
                                         onChange={(e) => setusuario(e.target.value)}
                                         required
                                     />
@@ -75,6 +77,7 @@ const Login = () => {
         </div>
     );
 };
+
 
 
 const root = createRoot(document.getElementById('login'));
