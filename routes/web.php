@@ -15,9 +15,9 @@ Route::middleware('auth::sanctum')->group(function(){
 
 
 Route::get('/login',[AuthController::class,'index'])->name('login');
-Route::get('/react',[VerdurasController::class, 'react'])->name('react');
+Route::post('/loginverif',[VerdurasController::class, 'login']);
 
 
 Route::get('/{any}', function () {
-    return view('react'); // Devuelve la vista principal de React
+    return view('react'); 
 })->where('any', '.*');
