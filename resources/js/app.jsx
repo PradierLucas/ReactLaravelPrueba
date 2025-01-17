@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Importar estilos de Bootstrap
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Opcional: Importar funcionalidad JavaScript
 import Formulario from './form';
 import Tabla from './tabla';
+
 import PrivateRoute from './RutasPrivadas';
 
 
@@ -16,6 +17,7 @@ const App = () => {
             <Routes>
                 <Route path="/form" element={<Formulario />} />
                 <Route path="/tabla" element={<Tabla />} />
+                
                 <RutasPrivadas path="/ACA VA LA RUTA" element={}
             </Routes>
         </Router>
