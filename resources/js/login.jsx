@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createRoot } from 'react-dom/client';
 
-
 const Login = () => {
-    const [mail, setmail] = useState('');
+    const [email, setemail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,7 +19,7 @@ const Login = () => {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': csrfToken, 
             },
-            body: JSON.stringify({ mail, password }),
+            body: JSON.stringify({ email, password }),
         });
 
         const data = await response.json();
@@ -29,6 +27,8 @@ const Login = () => {
         if (response.ok) {
             // Handle successful login
             console.log('Login successful', data);
+            // Save token to local storage
+            localStorage.setItem('token', data.token);
         } else {
             // Handle errors
             setError(data.message || 'Login failed');
@@ -45,13 +45,13 @@ const Login = () => {
                             {error && <div className="alert alert-danger">{error}</div>}
                             <form onSubmit={handleSubmit}>
                                 <div className="form-group">
-                                    <label htmlFor="usuario">Mail</label>
+                                    <label htmlFor="mail">Mail</label>
                                     <input
                                         type="mail"
                                         className="form-control"
                                         id="mail"
-                                        value={mail}
-                                        onChange={(e) => setusuario(e.target.value)}
+                                        value={email}
+                                        onChange={(e) => setemail(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -78,7 +78,7 @@ const Login = () => {
     );
 };
 
+export default Login;
 
-
-const root = createRoot(document.getElementById('login'));
-root.render(<Login />);
+/* const root = createRoot(document.getElementById('login'));
+root.render(<Login />); */

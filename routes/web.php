@@ -15,6 +15,11 @@ Route::middleware('auth::sanctum')->group(function(){
 
 Route::post('/loginverif',[AuthController::class],'loginverif');
 
-Route::get('/{any}', function () {
+/* Route::get('/login', function () {
     return view('login'); // Devuelve la vista principal de React
+});
+ */
+
+Route::get('/{any}', function () {
+    return view('react'); // Devuelve la vista principal de React
 })->where('any', '.*');
