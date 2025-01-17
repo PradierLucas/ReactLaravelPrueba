@@ -22,7 +22,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        $user = Auth::guard()->user();
+        $user = Auth::guard('sanctum')->user();
         $token = $user->createToken('token-name')->plainTextToken;
 
         return response()->json(['token' => $token]);
