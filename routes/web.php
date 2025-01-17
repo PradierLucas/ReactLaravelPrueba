@@ -11,16 +11,11 @@ Route::middleware('auth::sanctum')->group(function(){
         Route::get('/{id}', [VerdurasController::class, 'show']);
         Route::put('/{id}', [VerdurasController::class, 'guardaredit']);
         Route::patch('/{id}/estado', [VerdurasController::class, 'cambiarEstado']);
-        Route::get('/{any}', function () {
-            return view('react'); // Devuelve la vista principal de React
-        })->where('any', '.*');
         });
 
 
 
 
-
-
-Route::get('/login', function () {
-    return view('login'); // Devuelve la vista principal de React
-});
+Route::get('/{any}', function () {
+    return view('react'); // Devuelve la vista principal de React
+})->where('any', '.*');
