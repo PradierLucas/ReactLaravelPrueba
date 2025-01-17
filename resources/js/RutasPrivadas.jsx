@@ -14,7 +14,7 @@ const RutasPrivadas = ({ component: Component, ...rest }) => {
                 isAuthenticated() ? (
                     <Component {...props} />
                 ) : (
-                    <Redirect to="ACA VA LA RUTA DE LOGIN" />
+                    <Redirect to="/login" />
                 )
             }
         />
